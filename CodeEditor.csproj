@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>13</LangVersion>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="StackExchange.StacksIcons" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\lib\codemirror.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\lib\lang-javascript.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\overrides-fixes.css" />
+    </ItemGroup>
+
+</Project>
