@@ -1,0 +1,8 @@
+code-mirror-editor {
+  display: block;
+  height: 100%;
+}
+
+.cm-editor {
+  padding-top: 7px;
+}

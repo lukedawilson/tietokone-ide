@@ -7,7 +7,7 @@ namespace CodeEditor.Controllers;
 
 public class HomeController : Controller
 {
-    [HttpGet]
+    [HttpGet("")]
     public IActionResult Home() => Request.IsPartialRequest() ? PartialView("_Index") : View("_Index");
 
     [HttpGet("privacy")]

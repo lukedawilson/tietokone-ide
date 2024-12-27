@@ -1,0 +1,14 @@
+ul.lm_tabs, li.lm_tab {
+    height: 100% !important;
+    width: 100% !important;
+    background-color: black !important;
+}
+
+span.lm_title {
+    font-size: large;
+    padding-top:  3px;
+}
+
+ul.lm_controls {
+    display: none;
+}
