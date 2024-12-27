@@ -39,6 +39,7 @@ class GoldenLayoutWidgets extends HTMLElement {
       },
       dimensions: {
         headerHeight: 30,
+        borderWidth: 4,
       },
       content: [
         {

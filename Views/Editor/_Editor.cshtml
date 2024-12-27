@@ -1,16 +1,16 @@
 ﻿@using StackExchange.StacksIcons
 
 <nav>
-  <div class="s-navigation bs-ring ml6 mr6 mt4 mb4">
-    <button type="button" class="s-navigation--item fc-green-300" onclick="onRunClicked()">@Svg.Play</button>
+  <div class="s-navigation bg-purple-100">
+    <button disabled id="run" type="button" class="s-navigation--item fc-green-300" onclick="onRunClicked()">@Svg.Play</button>
   </div>
 </nav>
 
-<golden-layout-widgets class="mt2">
-  <code-mirror-editor data-name="editor" data-title="JavaScript"></code-mirror-editor>
+<golden-layout-widgets>
+  <code-mirror-editor data-name="editor" data-title="JavaScript" onUpdate="document.getElementById('run').disabled = !value"></code-mirror-editor>
   <div id="output"
-       class="p16"
-       style="width: 100%; height: calc(100% - 100px); top: 50px; background-color: #2D2E2F; color: limegreen; overflow: auto"
+       class="p16 bg-black-050"
+       style="width: 100%; height: calc(100% - 100px); top: 50px; color: limegreen; overflow: auto"
        readonly="readonly"
        data-name="output"
        data-title="Output">
@@ -20,9 +20,7 @@
 <script>
   function onRunClicked() {
     const editor = document.querySelector('code-mirror-editor').editorView;
-    const code = editor.viewState.state.doc.text
-      ? editor.viewState.state.doc.text.join('\n')
-      : document.querySelector('code-mirror-editor').editorView.viewState.state.doc.children.map(x => Array.from(x)).flatMap(x => x).join('\n');
+    const code = editor.viewState.state.doc.toString();
     const run = new Function(code);
 
     const consoleLog = console.log
@@ -35,7 +33,6 @@
 
     try {
       run();
-
       console.log();
       console.log('Execution complete.');
     } catch (e) {

@@ -13,9 +13,13 @@ ul.lm_controls {
 }
 
 .lm_header {
-  background-color: rgb(43, 45, 74); /* purple-100 */
+  background-color: #53568D;
 }
 
 .lm_title {
   padding-top: 4px;
+}
+
+.lm_drag_handle {
+  color: #C8CCD0 !important;
 }

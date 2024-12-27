@@ -13,13 +13,19 @@ class CodeMirrorEditor extends HTMLElement {
     const { javascript, javascriptLanguage, scopeCompletionSource } = this.codeMirror["@codemirror/lang-javascript"];
     const { oneDark } = this.codeMirror["@codemirror/theme-one-dark"];
 
+    const onUpdate = this.getAttribute('onUpdate');
     this.editorView = new EditorView({
       doc: '',
       extensions: [
         basicSetup,
         javascript(),
         javascriptLanguage.data.of({ autocomplete: scopeCompletionSource(globalThis) }),
-        oneDark
+        oneDark,
+        EditorView.updateListener.of(update => {
+          if (update.docChanged && onUpdate) {
+            new Function('value', onUpdate)(update.state.doc.toString());
+          }
+        })
       ],
       parent: this
     });
