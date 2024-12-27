@@ -1,14 +1,21 @@
 ul.lm_tabs, li.lm_tab {
-    height: 100% !important;
-    width: 100% !important;
-    background-color: black !important;
+  height: 100% !important;
+  width: 100% !important;
+  background-color: inherit !important;
 }
 
 span.lm_title {
-    font-size: large;
-    padding-top:  3px;
+  font-size: large;
 }
 
 ul.lm_controls {
-    display: none;
+  display: none;
+}
+
+.lm_header {
+  background-color: rgb(43, 45, 74); /* purple-100 */
+}
+
+.lm_title {
+  padding-top: 4px;
 }
