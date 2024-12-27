@@ -1,4 +1,4 @@
-﻿import 'http://code.jquery.com/jquery-1.11.1.min.js';
+﻿import 'https://code.jquery.com/jquery-1.11.1.min.js';
 
 class GoldenLayoutWidgets extends HTMLElement {
   constructor() {

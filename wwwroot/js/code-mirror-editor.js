@@ -1,4 +1,4 @@
-﻿import 'http://localhost:5293/proxy/codemirror.js'
+﻿import '/proxy/codemirror.js'
 
 class CodeMirrorEditor extends HTMLElement {
   constructor() {
