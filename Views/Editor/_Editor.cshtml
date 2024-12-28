@@ -25,13 +25,10 @@
 </nav>
 
 <div class="grid indigo lighten-1">
-  <div>
-    <code-mirror-editor data-name="editor"
-                        data-title="JavaScript"
-                        onUpdate="const btn = document.getElementById('run'); if (value) { btn.classList.remove('disabled'); } else { btn.classList.add('disabled'); }">
-    </code-mirror-editor>
-  </div>
+  <code-mirror-editor data-name="editor" data-title="JavaScript" onUpdate="onUpdate(value)"></code-mirror-editor>
+
   <div class="gutter-row-1 gutter-row-2"></div>
+
   <div id="output"
        class="p3 blue-grey darken-4 white-text"
        style="width: 100%; height: 100%; overflow: auto"
@@ -50,6 +47,15 @@
       element: document.querySelector('.gutter-row-1'),
     }]
   })
+
+  function onUpdate(value) {
+    const btn = document.getElementById('run');
+    if (value) {
+      btn.classList.remove('disabled');
+    } else {
+      btn.classList.add('disabled');
+    }
+  }
 
   function onRunClicked() {
     const editor = document.querySelector('code-mirror-editor').editorView;
