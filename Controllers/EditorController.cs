@@ -1,10 +1,9 @@
-using CodeEditor.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeEditor.Controllers;
 
-public class EditorController : Controller
+public class EditorController : HtmxController
 {
     [HttpGet("editor")]
-    public IActionResult Index() => Request.IsPartialRequest() ? PartialView("_Editor") : View("_Editor");
+    public IActionResult Index() => HtmxView("_Editor");
 }
