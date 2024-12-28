@@ -8,6 +8,7 @@
 
 .gutter-row-1, .gutter-row-2 {
   cursor: row-resize;
+  border: solid 1px #6200ea; /* purple darken-4 */
 }
 
 .gutter-row-1 {
@@ -21,22 +22,7 @@
 /* general layout overrides */
 
 html {
-  background-color: #4527a0 !important;
-}
-
-code-mirror-editor {
-  height: calc(100% - 32px) !important;
-}
-
-.console {
-  width:  100% !important;
-  height: calc(100% - 32px) !important;
-}
-
-.console > div {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  background-color: #263238 !important; /* blue-grey darken-4 */
 }
 
 nav.toolbar {
@@ -55,4 +41,15 @@ nav.toolbar a {
   vertical-align: top;
   margin-top: 4px !important;
   margin-left: 4px !important;
+}
+
+.console {
+  width:  100% !important;
+  height: calc(100% - 32px) !important;
+}
+
+.console > div {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
