@@ -8,13 +8,13 @@
     <!-- Materialize -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="~/css/materialize.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/lib/materialize.css" />
 
     <!-- Split Grid -->
     <script src="https://unpkg.com/split-grid/dist/split-grid.js"></script>
 
     <!-- CodeMirror -->
-    <link type="text/css" rel="stylesheet" href="~/css/code-mirror-editor.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/components/code-mirror-editor.css" />
   </head>
   <body class="black white-text">
     <!-- navbar -->
@@ -32,6 +32,17 @@
       </nav>
     </div>
 
+    <!-- track viewport height -->
+    <script>
+      function setViewportHeight() {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      }
+
+      window.addEventListener('resize', setViewportHeight);
+      window.addEventListener('orientationchange', setViewportHeight);
+      setViewportHeight();
+    </script>
+
     <!-- main content -->
     <div id="main-content">
       @RenderBody()
@@ -42,6 +53,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- custom web components -->
-    <script type="module" src="~/js/code-mirror-editor.js"></script>
+    <script type="module" src="~/js/components/code-mirror-editor.js"></script>
   </body>
 </html>

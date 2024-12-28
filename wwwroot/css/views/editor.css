@@ -1,0 +1,58 @@
+/* grid specification */
+
+.grid {
+  display: grid;
+  grid-template-rows: 1fr 5px 1fr;
+  height: calc(var(--vh, 1vh) * 100 - 128px) !important;
+}
+
+.gutter-row-1, .gutter-row-2 {
+  cursor: row-resize;
+}
+
+.gutter-row-1 {
+  grid-column: 1/-1;
+}
+
+.gutter-row-2 {
+  grid-row: 2;
+}
+
+/* general layout overrides */
+
+html {
+  background-color: #4527a0 !important;
+}
+
+code-mirror-editor {
+  height: calc(100% - 32px) !important;
+}
+
+.console {
+  width:  100% !important;
+  height: calc(100% - 32px) !important;
+}
+
+.console > div {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+nav.toolbar {
+  height: 32px;
+}
+
+nav.toolbar li {
+  height: 32px;
+}
+
+nav.toolbar a {
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: top;
+  margin-top: 4px !important;
+  margin-left: 4px !important;
+}

@@ -14,4 +14,8 @@
       <_ContentIncludedByDefault Remove="wwwroot\css\overrides-fixes.css" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\js\lib\" />
+    </ItemGroup>
+
 </Project>

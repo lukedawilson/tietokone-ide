@@ -1,4 +1,4 @@
-﻿import '/proxy/codemirror.js'
+﻿import '/js/lib/codemirror.min.js'
 
 class CodeMirrorEditor extends HTMLElement {
   constructor() {
