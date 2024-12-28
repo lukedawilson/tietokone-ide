@@ -1,12 +1,8 @@
 ﻿<style>
   .grid {
     display: grid;
-    grid-template-rows: 1fr 10px 1fr;
+    grid-template-rows: 1fr 5px 1fr;
     height: calc(100vh - 128px);
-  }
-
-  .gutter-row-1, .gutter-row-2 {
-    border: solid 3px #ee6d73;
   }
 
   .gutter-row-1 {
@@ -16,18 +12,19 @@
 
   .gutter-row-2 {
     grid-row: 2;
+    cursor: row-resize;
   }
 </style>
 
-<nav class="red lighten-3">
+<nav class="indigo lighten-1">
   <div class="nav-wrapper">
     <ul class="left">
-      <li><a id="run" class="waves-effect btn btn-small disabled" onclick="onRunClicked()"><i class="material-icons">play_arrow</i></a></li>
+      <li><a id="run" class="waves-effect btn btn-small deep-purple green-text darken-3 disabled" onclick="onRunClicked()"><i class="material-icons">play_arrow</i></a></li>
     </ul>
   </div>
 </nav>
 
-<div class="grid red lighten-3">
+<div class="grid indigo lighten-1">
   <div>
     <code-mirror-editor data-name="editor"
                         data-title="JavaScript"
@@ -36,8 +33,8 @@
   </div>
   <div class="gutter-row-1 gutter-row-2"></div>
   <div id="output"
-       class="p3 black"
-       style="width: 100%; height: 100%; color: limegreen; overflow: auto"
+       class="p3 blue-grey darken-4 white-text"
+       style="width: 100%; height: 100%; overflow: auto"
        readonly="readonly"
        data-name="output"
        data-title="Output">
