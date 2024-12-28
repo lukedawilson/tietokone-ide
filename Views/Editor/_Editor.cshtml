@@ -1,4 +1,25 @@
-﻿<nav class="red lighten-3">
+﻿<style>
+  .grid {
+    display: grid;
+    grid-template-rows: 1fr 10px 1fr;
+    height: calc(100vh - 128px);
+  }
+
+  .gutter-row-1, .gutter-row-2 {
+    border: solid 3px #ee6d73;
+  }
+
+  .gutter-row-1 {
+    grid-column: 1/-1;
+    cursor: row-resize;
+  }
+
+  .gutter-row-2 {
+    grid-row: 2;
+  }
+</style>
+
+<nav class="red lighten-3">
   <div class="nav-wrapper">
     <ul class="left">
       <li><a id="run" class="waves-effect btn btn-small disabled" onclick="onRunClicked()"><i class="material-icons">play_arrow</i></a></li>
@@ -6,18 +27,33 @@
   </div>
 </nav>
 
-<golden-layout-widgets>
-  <code-mirror-editor data-name="editor" data-title="JavaScript" onUpdate="const btn = document.getElementById('run'); if (value) { btn.classList.remove('disabled'); } else { btn.classList.add('disabled'); }"></code-mirror-editor>
+<div class="grid red lighten-3">
+  <div>
+    <code-mirror-editor data-name="editor"
+                        data-title="JavaScript"
+                        onUpdate="const btn = document.getElementById('run'); if (value) { btn.classList.remove('disabled'); } else { btn.classList.add('disabled'); }">
+    </code-mirror-editor>
+  </div>
+  <div class="gutter-row-1 gutter-row-2"></div>
   <div id="output"
        class="p3 black"
-       style="width: 100%; height: calc(100% - 100px); top: 50px; color: limegreen; overflow: auto"
+       style="width: 100%; height: 100%; color: limegreen; overflow: auto"
        readonly="readonly"
        data-name="output"
        data-title="Output">
   </div>
-</golden-layout-widgets>
+</div>
 
 <script>
+  window.Split({
+    minSize: 200,
+    snapOffset: 10,
+    rowGutters: [{
+      track: 1,
+      element: document.querySelector('.gutter-row-1'),
+    }]
+  })
+
   function onRunClicked() {
     const editor = document.querySelector('code-mirror-editor').editorView;
     const code = editor.viewState.state.doc.toString();
@@ -41,4 +77,5 @@
       console.log = consoleLog;
     }
   }
+
 </script>

@@ -32,7 +32,7 @@ class CodeMirrorEditor extends HTMLElement {
 
     // fix editor height to fill containing div
     for (const node of this.childNodes) {
-      if (node.classList.contains('cm-editor')) {
+      if (node.classList?.contains('cm-editor')) {
         node.style.height = '100%';
         break;
       }
