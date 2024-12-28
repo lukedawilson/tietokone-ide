@@ -2,6 +2,7 @@ ul.lm_tabs, li.lm_tab {
   height: 100% !important;
   width: 100% !important;
   background-color: inherit !important;
+  color: inherit !important;
 }
 
 span.lm_title {
@@ -13,13 +14,10 @@ ul.lm_controls {
 }
 
 .lm_header {
-  background-color: #53568D;
+  background-color: #ee6d73;
+  color: white;
 }
 
 .lm_title {
   padding-top: 4px;
-}
-
-.lm_drag_handle {
-  color: #C8CCD0 !important;
 }

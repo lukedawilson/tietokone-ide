@@ -1,52 +1,50 @@
-﻿@using StackExchange.StacksIcons
-@{
-  const string stackoverflow = "@stackoverflow";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>tietokone.io | IDE</title>
 
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <!-- Materialize -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="~/css/materialize.css" />
 
-    <!-- Stacks -->
-    <link rel="stylesheet" href="https://unpkg.com/@stackoverflow/stacks/dist/css/stacks.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/@stackoverflow/stacks-icons@6.0.2/dist/icons.css">
-    <script defer src="https://unpkg.com/@stackoverflow/stacks/dist/js/stacks.min.js"></script>
-
-    <!-- GoldenLayout styles -->
+    <!-- GoldenLayout -->
     <link type="text/css" rel="stylesheet" href="https://golden-layout.com/files/latest/css/goldenlayout-base.css" />
     <link type="text/css" rel="stylesheet" href="https://golden-layout.com/files/latest/css/goldenlayout-dark-theme.css" />
     <link type="text/css" rel="stylesheet" href="~/css/golden-layout-widgets.css" />
 
-    <!-- CodeMirror styles -->
+    <!-- CodeMirror -->
     <link type="text/css" rel="stylesheet" href="~/css/code-mirror-editor.css" />
+  </head>
+  <body class="theme-dark">
+    <!-- navbar -->
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" hx-get="/" hx-target="#main-content" hx-push-url="true" class="brand-logo pl3">
+            <i class="material-icons">code</i>Tietokone IDE
+          </a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="#" hx-get="/editor" hx-target="#main-content" hx-push-url="true">Editor</a></li>
+            <li><a href="#" hx-get="/privacy" hx-target="#main-content" hx-push-url="true">Privacy</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <!-- main content -->
+    <div id="main-content">
+      @RenderBody()
+    </div>
+
+    <!-- JS dependencies -->
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- custom web components -->
     <script type="module" src="~/js/code-mirror-editor.js"></script>
     <script type="module" src="~/js/golden-layout-widgets.js"></script>
-  </head>
-  <body class="theme-dark">
-    <!-- navbar -->
-    <header class="s-topbar">
-      <div class="s-topbar--container">
-        <a hx-get="/" class="s-topbar--logo" hx-target="#container" hx-push-url="true">@Svg.Code&nbsp;&nbsp;Tietokone IDE</a>
-        <a hx-get="/editor" class="s-topbar--logo fc-light" hx-target="#container" hx-push-url="true">Editor</a>
-        <nav class="s-topbar--navigation">
-          <ol class="s-topbar--content">
-            <li><a hx-get="/privacy" class="s-topbar--item" hx-target="#container" hx-push-url="true">Privacy</a></li>
-          </ol>
-        </nav>
-      </div>
-    </header>
-
-    <!-- main content -->
-    <div id="container">
-      @RenderBody()
-    </div>
   </body>
 </html>

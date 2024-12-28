@@ -1,15 +1,15 @@
-﻿@using StackExchange.StacksIcons
-
-<nav>
-  <div class="s-navigation bg-purple-100">
-    <button disabled id="run" type="button" class="s-navigation--item fc-green-300" onclick="onRunClicked()">@Svg.Play</button>
+﻿<nav class="red lighten-3">
+  <div class="nav-wrapper">
+    <ul class="left">
+      <li><a id="run" class="waves-effect btn btn-small disabled" onclick="onRunClicked()"><i class="material-icons">play_arrow</i></a></li>
+    </ul>
   </div>
 </nav>
 
 <golden-layout-widgets>
-  <code-mirror-editor data-name="editor" data-title="JavaScript" onUpdate="document.getElementById('run').disabled = !value"></code-mirror-editor>
+  <code-mirror-editor data-name="editor" data-title="JavaScript" onUpdate="const btn = document.getElementById('run'); if (value) { btn.classList.remove('disabled'); } else { btn.classList.add('disabled'); }"></code-mirror-editor>
   <div id="output"
-       class="p16 bg-black-050"
+       class="p3 black"
        style="width: 100%; height: calc(100% - 100px); top: 50px; color: limegreen; overflow: auto"
        readonly="readonly"
        data-name="output"
