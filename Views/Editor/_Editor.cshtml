@@ -15,41 +15,34 @@
   </div>
 </nav>
 
-<div class="grid blue-grey darken-4">
-  <div>
-    <nav class="deep-purple darken-3" style="height: 32px">
-      <h6 class="pl2 m0" style="line-height: 32px !important;">JavaScript</h6>
-    </nav>
+<split-grid-wrapper first-gutter-class="gutter-row-1">
+  <div class="grid blue-grey darken-4">
+    <div>
+      <nav class="deep-purple darken-3" style="height: 32px">
+        <h6 class="pl2 m0" style="line-height: 32px !important;">JavaScript</h6>
+      </nav>
 
-    <code-editor id="code-editor"></code-editor>
-  </div>
+      <code-editor id="code-editor"></code-editor>
+    </div>
 
-  <div class="gutter-row-1 gutter-row-2"></div>
+    <div class="gutter-row-1 gutter-row-2"></div>
 
-  <div class="console">
-    <nav class="deep-purple darken-3" style="height: 27px;">
-      <h6 class="pl2 m0" style="line-height: 22px !important;">Console</h6>
-    </nav>
+    <div class="console">
+      <nav class="deep-purple darken-3" style="height: 27px;">
+        <h6 class="pl2 m0" style="line-height: 22px !important;">Console</h6>
+      </nav>
 
-    <div id="console-output"
-         class="p3 blue-grey darken-4 white-text"
-         readonly="readonly"
-         data-name="output"
-         data-title="Output">
+      <div id="console-output"
+           class="p3 blue-grey darken-4 white-text"
+           readonly="readonly"
+           data-name="output"
+           data-title="Output">
+      </div>
     </div>
   </div>
-</div>
+</split-grid-wrapper>
 
 <script>
-  window.Split({
-    minSize: 0,
-    snapOffset: 0,
-    rowGutters: [{
-      track: 1,
-      element: document.querySelector('.gutter-row-1'),
-    }]
-  })
-
   const editor = document.getElementById('code-editor');
   const output = document.getElementById('console-output');
   const onRunButtonClick = () => {

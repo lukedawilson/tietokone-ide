@@ -1,3 +1,7 @@
+import "https://cdnjs.cloudflare.com/ajax/libs/ace/1.37.1/ace.min.js";
+import "https://cdnjs.cloudflare.com/ajax/libs/ace/1.37.1/mode-javascript.min.js";
+import "https://cdnjs.cloudflare.com/ajax/libs/ace/1.37.1/theme-monokai.min.js";
+
 class CodeEditor extends HTMLElement {
   constructor() {
     super();
@@ -5,10 +9,9 @@ class CodeEditor extends HTMLElement {
     this.editor = null;
     this.attachShadow({ mode: 'open' });
   }
-
   connectedCallback() {
     this.shadowRoot.innerHTML = `<div id="code-editor-content" style="height: calc(100% - 32px) !important;"></div>`;
-    const editor = ace.edit(this.shadowRoot.getElementById('code-editor-content'), {
+    const editor = window.ace.edit(this.shadowRoot.getElementById('code-editor-content'), {
       mode: 'ace/mode/javascript',
       theme: 'ace/theme/monokai',
     });
