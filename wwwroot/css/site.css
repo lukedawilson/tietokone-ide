@@ -33,7 +33,7 @@
 .grid {
   display: grid;
   grid-template-rows: 1fr 5px 1fr;
-  height: calc(100vh - 128px) !important;
+  height: calc(var(--vh, 1vh) * 100 - 128px) !important;
 }
 
 .gutter-row-1, .gutter-row-2 {
