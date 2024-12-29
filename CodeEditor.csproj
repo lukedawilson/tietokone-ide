@@ -9,11 +9,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\js\lib\codemirror.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\js\lib\lang-javascript.min.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\overrides-fixes.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\js\components\code-mirror-editor.js" />
-      <_ContentIncludedByDefault Remove="wwwroot\js\components\code-editor.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\lib\codemirror.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\lib\lang-javascript.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\css\overrides-fixes.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\components\code-mirror-editor.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\components\code-editor.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\css\views\editor.css" />
     </ItemGroup>
+
+    <Target Name="ViteBuild" AfterTargets="Build">
+        <Exec Command="npm run build" />
+    </Target>
 
 </Project>

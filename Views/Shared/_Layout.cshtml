@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@functions
+{
+  static string GetAssetPath(string searchPattern)
+  {
+    const string subpath = "dist/assets";
+    var path = System.IO.Path.Combine(CodeEditor.Context.WebRootPath, subpath);
+    var filename = System.IO.Path.GetFileName(Directory.GetFiles(path, searchPattern).First());
+    return $"/{subpath}/{filename}";
+  }
+}
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -8,8 +19,18 @@
     <!-- Materialize -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="~/css/lib/materialize.css" />
+
+    <!-- custom CSS -->
+    @if (CodeEditor.Context.IsDevelopment)
+    {
+      <link type="text/css" rel="stylesheet" href="~/css/site.css" />
+    }
+    else
+    {
+      <link rel="stylesheet" href="@GetAssetPath("styles-*.css")" />
+    }
   </head>
+
   <body class="black white-text">
     <!-- navbar -->
     <div class="navbar-fixed">
@@ -32,11 +53,19 @@
     </div>
 
     <!-- JS dependencies -->
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script defer src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <!-- custom components -->
-    <script type="module" src="~/js/components/code-editor.js"></script>
-    <script type="module" src="~/js/components/split-grid-wrapper.js"></script>
+    <!-- custom js -->
+    @if (CodeEditor.Context.IsDevelopment)
+    {
+      <script defer type="module" src="~/js/components/code-editor.js"></script>
+      <script defer type="module" src="~/js/components/split-grid-wrapper.js"></script>
+      <!-- add custom scripts here -->
+    }
+    else
+    {
+      <script defer type="module" src="@GetAssetPath("main-*.js")"></script>
+    }
   </body>
 </html>

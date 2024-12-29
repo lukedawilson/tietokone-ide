@@ -1,3 +1,5 @@
+using CodeEditor;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -15,5 +17,8 @@ app.UseRouting();
 app.UseAuthorization();
 app.MapStaticAssets();
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}").WithStaticAssets();
+
+Context.IsDevelopment = app.Environment.IsDevelopment();
+Context.WebRootPath = app.Environment.WebRootPath;
 
 app.Run();
