@@ -48,8 +48,8 @@
 
 <script>
   function onRunButtonClick() {
-    const editor = document.getElementById('code-editor');
-    const output = document.getElementById('console-output');
+    const editor = u('#code-editor').first();
+    const output = u('#console-output').first();
 
     output.innerHTML = '';
     editor.run(output);

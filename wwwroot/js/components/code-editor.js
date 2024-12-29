@@ -5,20 +5,22 @@ import "https://cdnjs.cloudflare.com/ajax/libs/ace/1.37.1/theme-monokai.min.js";
 class CodeEditor extends HTMLElement {
   constructor() {
     super();
-
     this.editor = null;
     this.attachShadow({ mode: 'open' });
   }
+
   connectedCallback() {
-    this.shadowRoot.innerHTML = `<div id="code-editor-content" style="height: calc(100% - 32px) !important;"></div>`;
-    const editor = window.ace.edit(this.shadowRoot.getElementById('code-editor-content'), {
+    const shadowRoot = u(this.shadowRoot);
+    shadowRoot.first().innerHTML = `<div id="code-editor-content" style="height: calc(100% - 32px) !important;"></div>`;
+
+    const editor = window.ace.edit(shadowRoot.find('#code-editor-content').first(), {
       mode: 'ace/mode/javascript',
       theme: 'ace/theme/monokai',
     });
 
     editor.renderer.attachToShadowRoot();
     editor.session.on('change', () => {
-      const btn = document.getElementById('run');
+      const btn = u('#run').first();
       if (editor.getValue(0)) {
         btn.classList.remove('disabled');
       } else {
