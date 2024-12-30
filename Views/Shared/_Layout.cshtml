@@ -1,34 +1,27 @@
-﻿@functions
-{
-  static string GetAssetPath(string searchPattern)
-  {
-    const string subpath = "dist/assets";
-    var path = System.IO.Path.Combine(CodeEditor.Context.WebRootPath, subpath);
-    var filename = System.IO.Path.GetFileName(Directory.GetFiles(path, searchPattern).First());
-    return $"/{subpath}/{filename}";
-  }
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>tietokone.io | IDE</title>
 
+    <!-- HTMX -->
+    <script defer src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    <!-- Google icons preconnect hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <!-- Materialize -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- custom CSS -->
-    @if (CodeEditor.Context.IsDevelopment)
-    {
-      <link type="text/css" rel="stylesheet" href="~/css/site.css" />
-    }
-    else
-    {
-      <link rel="stylesheet" href="@GetAssetPath("styles-*.css")" />
-    }
+    <environment include="development">
+      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="development">
+      <link rel="stylesheet" href="~/dist/styles.css" asp-append-version="true" />
+    </environment>
   </head>
 
   <body class="black white-text">
@@ -37,7 +30,7 @@
       <nav class="deep-purple darken-3">
         <div class="nav-wrapper">
           <a href="/" hx-get="/" hx-target="#main-content" hx-push-url="true" class="brand-logo pl3">
-            <i class="material-icons">code</i><span class="hide-mobile">Tietokone IDE</span>
+            <i class="material-symbols-outlined" style="float: none">terminal</i><span class="desktop-only">Tietokone IDE</span>
           </a>
           <ul class="right">
             <li><a href="/editor" hx-get="/editor" hx-target="#main-content" hx-push-url="true">Editor</a></li>
@@ -47,26 +40,17 @@
       </nav>
     </div>
 
+    <umbrella-js-wrapper></umbrella-js-wrapper>
+
     <!-- main content -->
     <div id="main-content">
       @RenderBody()
     </div>
 
-    <!-- JS dependencies -->
-    <script defer src="https://unpkg.com/htmx.org@2.0.4"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Google icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&icon_names=play_arrow,terminal" />
 
     <!-- custom js -->
-    @if (CodeEditor.Context.IsDevelopment)
-    {
-      <script defer type="module" src="~/js/components/code-editor.js"></script>
-      <script defer type="module" src="~/js/components/split-grid-wrapper.js"></script>
-      <!-- add custom scripts here -->
-    }
-    else
-    {
-      <script defer type="module" src="@GetAssetPath("main-*.js")"></script>
-    }
+    <script defer type="module" src="~/dist/main.js" asp-append-version="true"></script>
   </body>
 </html>

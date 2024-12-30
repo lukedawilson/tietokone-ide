@@ -1,4 +1,5 @@
-import 'https://unpkg.com/split-grid/dist/split-grid.js';
+import u from 'umbrellajs';
+import Split from 'split-grid';
 
 class SplitGridWrapper extends HTMLElement {
   constructor() {
@@ -7,7 +8,7 @@ class SplitGridWrapper extends HTMLElement {
   }
 
   connectedCallback() {
-    this.splitGrid = window.Split({
+    this.splitGrid = Split({
       minSize: 0,
       snapOffset: 0,
       rowGutters: [{

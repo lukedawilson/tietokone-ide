@@ -23,7 +23,7 @@
 }
 
 @media (max-width: 768px) {
-  .hide-mobile {
+  .desktop-only {
     display: none !important;
   }
 }
@@ -61,10 +61,19 @@ nav.toolbar a {
   padding: 0;
   width: 24px;
   height: 24px;
-  line-height: 24px;
   vertical-align: top;
   margin-top: 4px !important;
   margin-left: 4px !important;
+}
+
+.btn-toolbar {
+  height: 32px !important;
+  width: 32px !important;
+  line-height: 32px !important;
+  font-size: 52px !important;
+  left: -15px !important;
+  position: relative !important;
+  top: -3px !important;
 }
 
 .console {

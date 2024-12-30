@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <Target Name="ViteBuild" AfterTargets="Build">
-        <Exec Command="npm run build" />
+        <Exec Command="npm i &amp;&amp; npm run build" />
     </Target>
 
 </Project>
