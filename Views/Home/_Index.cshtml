@@ -1,10 +1,41 @@
 <div class="container">
   <h1>Welcome to <strong>Tietokone IDE</strong>!</h1>
 
-  <p>I've created this site to test building a modern, interactive website without an SPA framework.</p>
+  <p>Collaborative code editor for the web. Built with <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/mvc">ASP.NET MVC</a>
+    and <a href="https://htmx.org/">HTMX</a>. The design system used is <a href="https://materializecss.com/">Materialize CSS</a>,
+    and the code editor component is <a href="https://ace.c9.io/">Ace</a>. The split layout is implemented using
+    <a href="https://split.js.org/#/split-grid">Split-Grid</a>.
+  </p>
 
-  <p>The site is built with <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/mvc">ASP.NET MVC</a>
-     and <a href="https://htmx.org/">HTMX</a>. The design system used is
-     <a href="https://materializecss.com/">Materialize CSS</a>. The split layout is implemented using
-     <a href="https://split.js.org/#/split-grid">Split-Grid</a>.</p>
+  <div class="row mt10 d-flex">
+    <div class="col s12 m6 d-flex flex-column">
+      <div class="card blue-grey darken-1 d-flex flex-column flex-1">
+        <div class="card-content white-text flex-1">
+          <span class="card-title">Create session</span>
+          <p>This will create a new session, with a unique ID, that others can join.</p>
+        </div>
+        <div class="card-action">
+          <form action="/sessions" method="POST" hx-post="/sessions" hx-target="#main-content" hx-push-url="true">
+            <button class="btn btn-link orange-text accent-2" type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6 d-flex flex-column">
+      <div class="card blue-grey darken-1 d-flex flex-column flex-1">
+        <div class="card-content white-text flex-1">
+          <span class="card-title">Join existing session</span>
+          <p>Please enter the code for the session you wish to join.</p>
+          <div class="input-field">
+            <input id="session-code" placeholder="Session code" type="text" class="validate" name="code" form="join-session">
+          </div>
+        </div>
+        <div class="card-action">
+          <form id="join-session" action="/sessions" method="GET" hx-get="/sessions" hx-target="#main-content" hx-push-url="true">
+            <button class="btn btn-link orange-text accent-2" type="submit">Join</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,10 +1,32 @@
-﻿<style>
+﻿@model Session
+
+<style scoped>
   html {
     background-color: #263238 !important; /* blue-grey darken-4 */
   }
+
+  .material-symbols-outlined {
+    line-height: unset !important;
+    width: 36px !important;
+    position: relative;
+  }
+
+  #run > i {
+    font-size: 52px !important;
+    left: -8px;
+  }
+
+  #share > i {
+    font-size: 32px !important;
+  }
+
+  #run, #share {
+    width: 36px;
+    padding: 0;
+  }
 </style>
 
-<nav class="toolbar indigo lighten-1">
+<nav class="indigo lighten-1">
   <div class="nav-wrapper">
     <ul class="left">
       <li>
@@ -12,7 +34,17 @@
            class="btn btn-secondary disabled"
            title="Run code..."
            onclick="onRunButtonClick()">
-          <i class="material-symbols-outlined btn-toolbar">play_arrow</i>
+          <i class="material-symbols-outlined">play_arrow</i>
+        </a>
+      </li>
+    </ul>
+    <ul class="right">
+      <li>
+        <a id="share"
+           class="btn btn-secondary"
+           title="Share session..."
+           onclick="onShareButtonClick()">
+          <i class="material-symbols-outlined">content_paste_go</i>
         </a>
       </li>
     </ul>
@@ -53,5 +85,10 @@
 
     output.innerHTML = '';
     editor.run(output);
+  }
+
+  async function onShareButtonClick() {
+    await navigator.clipboard.writeText('@Model.Code');
+    M.toast({html: 'Session code copied to clipboard!'})
   }
 </script>

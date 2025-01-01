@@ -5,5 +5,7 @@ namespace CodeEditor.Controllers;
 
 public class HtmxController : Controller
 {
-    protected IActionResult HtmxView(string viewName) => Request.IsPartialRequest() ? PartialView(viewName) : View(viewName);
+    protected IActionResult HtmxView(string viewName, object model = null) => Request.IsPartialRequest()
+        ? PartialView(viewName, model)
+        : View(viewName, model);
 }

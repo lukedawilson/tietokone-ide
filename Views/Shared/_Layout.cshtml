@@ -33,7 +33,6 @@
             <i class="material-symbols-outlined" style="float: none">terminal</i><span class="desktop-only">Tietokone IDE</span>
           </a>
           <ul class="right">
-            <li><a href="/editor" hx-get="/editor" hx-target="#main-content" hx-push-url="true">Editor</a></li>
             <li><a href="/privacy" hx-get="/privacy" hx-target="#main-content" hx-push-url="true">Privacy</a></li>
           </ul>
         </div>
@@ -47,8 +46,9 @@
       @RenderBody()
     </div>
 
-    <!-- Google icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&icon_names=play_arrow,terminal" />
+    <!-- Materialize and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100&icon_names=content_paste_go,play_arrow,terminal" />
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- custom js -->
     <script defer type="module" src="~/dist/main.js" asp-append-version="true"></script>

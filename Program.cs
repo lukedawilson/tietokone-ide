@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using CodeEditor;
+using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache();
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
@@ -31,5 +34,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+Context.MemoryCache = app.Services.GetRequiredService<IMemoryCache>();
 
 app.Run();
