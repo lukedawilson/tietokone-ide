@@ -4,7 +4,8 @@ namespace CodeEditor.Models;
 
 public class Session
 {
-    public Guid? Code { get; set; }
+    public Guid Code { get; set; }
+    public string Content { get; private set; }
 
     public static Session Create()
     {
@@ -18,5 +19,11 @@ public class Session
         return Context.MemoryCache.TryGetValue(code, out Session session)
             ? session
             : null;
+    }
+
+    public void UpdateContent(string content)
+    {
+        Content = content;
+        Context.MemoryCache.Set(Code, this);
     }
 }

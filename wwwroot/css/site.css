@@ -89,3 +89,71 @@
     display: block;
   }
 }
+
+/* Editor page */
+
+.grid {
+  display: grid;
+  grid-template-rows: 1fr 5px 1fr;
+  height: calc(var(--vh, 1vh) * 100 - 128px) !important;
+}
+
+.gutter-row-1, .gutter-row-2 {
+  cursor: row-resize;
+  border: solid 1px #6200ea; /* purple darken-4 */
+}
+
+.gutter-row-1 {
+  grid-column: 1/-1;
+}
+
+.gutter-row-2 {
+  grid-row: 2;
+}
+
+.material-symbols-outlined {
+  line-height: unset !important;
+  width: 36px !important;
+  position: relative;
+}
+
+#code-title-bar {
+  height: 32px !important;
+}
+
+#code-title-bar > h6 {
+  line-height: 32px !important;
+}
+
+#console-title-bar {
+  height: 27px;
+}
+
+#console-title-bar > h6 {
+  line-height: 22px !important;
+}
+
+#run > i {
+  font-size: 52px !important;
+  left: -8px;
+}
+
+#share > i {
+  font-size: 32px !important;
+}
+
+#run, #share {
+  width: 36px;
+  padding: 0;
+}
+
+.console {
+  width:  100% !important;
+  height: calc(100% - 32px) !important;
+}
+
+.console > div {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}

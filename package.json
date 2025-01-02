@@ -6,6 +6,7 @@
     "heroku-postbuild": "npm install && npm run build"
   },
   "dependencies": {
+    "@microsoft/signalr": "^8.0.7",
     "ace-builds": "^1.37.1",
     "split-grid": "^1.0.11",
     "umbrellajs": "^3.3.3",
