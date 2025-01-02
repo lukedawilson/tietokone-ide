@@ -1,5 +1,3 @@
-/* materialize extensions/overrides */
-
 .pl0, .p0 { padding-left: 0 !important; }
 .pr0, .p0 { padding-right: 0 !important; }
 .pt0, .p0 { padding-top: 0 !important; }
@@ -90,36 +88,4 @@
   .d-flex {
     display: block;
   }
-}
-
-/* editor page */
-
-.grid {
-  display: grid;
-  grid-template-rows: 1fr 5px 1fr;
-  height: calc(var(--vh, 1vh) * 100 - 128px) !important;
-}
-
-.gutter-row-1, .gutter-row-2 {
-  cursor: row-resize;
-  border: solid 1px #6200ea; /* purple darken-4 */
-}
-
-.gutter-row-1 {
-  grid-column: 1/-1;
-}
-
-.gutter-row-2 {
-  grid-row: 2;
-}
-
-.console {
-  width:  100% !important;
-  height: calc(100% - 32px) !important;
-}
-
-.console > div {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
 }
