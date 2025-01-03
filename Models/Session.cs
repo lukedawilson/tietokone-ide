@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Caching.Memory;
-
 namespace CodeEditor.Models;
 
 public class Session
@@ -7,23 +5,28 @@ public class Session
     public Guid Code { get; set; }
     public string Content { get; private set; }
 
-    public static Session Create()
-    {
-        var session = new Session { Code = Guid.NewGuid() };
-        Context.MemoryCache.Set(session.Code, session);
-        return session;
-    }
+    public static Session Create() => Upsert(new Session { Code = Guid.NewGuid() });
 
     public static Session Get(Guid code)
     {
-        return Context.MemoryCache.TryGetValue(code, out Session session)
-            ? session
-            : null;
+        var session = Context.Cache.Value.GetSet<Session>(code.ToString(), () => null, TimeSpan.FromDays(1));
+        if (session == null)
+            return null;
+
+        // refresh cache to reset expiration time
+        return Upsert(session);
     }
 
     public void UpdateContent(string content)
     {
         Content = content;
-        Context.MemoryCache.Set(Code, this);
+        Upsert(this);
+    }
+
+    private static Session Upsert(Session session)
+    {
+        Context.Cache.Value.Invalidate(session.Code.ToString());
+        Context.Cache.Value.GetSet(session.Code.ToString(), () => session, TimeSpan.FromDays(1));
+        return session;
     }
 }

@@ -137,3 +137,5 @@ _NCrunch*
 node_modules/
 wwwroot/dist/
 
+# Local env files
+.env

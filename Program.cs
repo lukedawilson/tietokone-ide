@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
 using CodeEditor;
 using CodeEditor.Hubs;
-using Microsoft.Extensions.Caching.Memory;
+using dotenv.net;
+
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
 
-builder.Services.AddMemoryCache();
-builder.Services.AddSignalR();
+builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR().AddStackExchangeRedis(options => options.Configuration = Context.RedisConfig.Value);
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
@@ -37,7 +38,5 @@ app.MapHub<CodeHub>("/code-updates");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-Context.MemoryCache = app.Services.GetRequiredService<IMemoryCache>();
 
 app.Run();
