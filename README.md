@@ -15,4 +15,7 @@ A collaborative code editor for the web.
 ```bash
 docker-compose up -d
 dotenv dotnet watch run
+
+# optionally rebuild frontend bundle on file change
+fswatch -or ./wwwroot/css ./wwwroot/js | xargs -n1 -I{} npm run heroku-postbuild
 ```

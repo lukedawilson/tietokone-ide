@@ -42,7 +42,7 @@ class CodeEditorGrid extends LitElement {
   }
 
   /**
-   * Do not use shadow DOM, so global styles (e.g. Materialize CSS) can be applied
+   * Do not use shadow DOM, so global styles (e.g. Materialize CSS) can be applied.
    */
   createRenderRoot() { return this; }
 }

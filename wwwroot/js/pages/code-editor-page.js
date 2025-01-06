@@ -2,10 +2,6 @@ import { LitElement, html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import u from 'umbrellajs';
 
-import ace from "ace-builds/src-noconflict/ace";
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/theme-monokai';
-
 import * as signalR from "@microsoft/signalr";
 
 export class CodeEditorPage extends LitElement {
@@ -20,41 +16,23 @@ export class CodeEditorPage extends LitElement {
 
   constructor() {
     super();
-
-    this.editor = null;
     this.connection = null;
   }
 
   /**
-   * Initialises the ACE editor and websocket connection.
+   * Initialises the websocket connection.
    */
   async firstUpdated(_) {
-    // initialise editor div
-    const editorDiv = u('#code-editor-content').first();
-    this.editor = ace.edit(editorDiv, {
-      mode: 'ace/mode/javascript',
-      theme: 'ace/theme/monokai',
-    });
+    const _this = this;
 
-    // initialise websocket connection and event listeners
     this.connection = new signalR.HubConnectionBuilder().withUrl("/code-updates").build();
-
-    this.editor.session.on('change', async () => {
-      this.runEnabled = !!this.editor.getValue();
-
-      if (!this.editor.curOp?.command?.name) {
-        return;
-      }
-
-      await this.connection.invoke('SendMessage', this.sessionCode, this.editor.getValue())
-    });
 
     this.connection.on("ReceiveMessage", (connectionId, message) => {
       if (connectionId === this.connection.connectionId) {
         return;
       }
 
-      this.editor.setValue(message, 1);
+      _this.aceEditor().setValue(message);
     });
 
     this.connection.onclose(error => {
@@ -82,7 +60,8 @@ export class CodeEditorPage extends LitElement {
     }
 
     try {
-      new Function(this.editor.getValue(0))();
+      const code = this.aceEditor().value();
+      new Function(code)();
     } catch (e) {
       console.log(e);
     } finally {
@@ -101,21 +80,27 @@ export class CodeEditorPage extends LitElement {
   }
 
   /**
-   * Cleans up the ACE editor and websocket connection.
+   * Cleans up the websocket connection.
    */
   async disconnectedCallback() {
     super.disconnectedCallback();
-
-    if (this.editor) {
-      this.editor.destroy();
-      this.editor.container.remove();
-      this.editor = null;
-    }
 
     if (this.connection) {
       await this.connection.stop();
       this.connection = null;
     }
+  }
+
+  async onCodeChange(event) {
+    this.runEnabled = !!event.detail.value;
+
+    if (!event.detail.isRemote) {
+      await this.connection.invoke('SendMessage', this.sessionCode, event.detail.value)
+    }
+  }
+
+  aceEditor() {
+    return u('ace-editor').first();
   }
 
   render() {
@@ -152,7 +137,9 @@ export class CodeEditorPage extends LitElement {
               <h6 class="pl2 m0">JavaScript</h6>
             </nav>
 
-            <div id="code-editor-content" style="height: calc(100% - 32px) !important"></div>
+            <ace-editor style="height: calc(100% - 32px) !important"
+                        @content-changed=${this.onCodeChange}>
+            </ace-editor>
           </div>
 
           <div class="gutter-row-1 gutter-row-2"></div>
@@ -172,7 +159,7 @@ export class CodeEditorPage extends LitElement {
   }
 
   /**
-   * Do not use shadow DOM, so global styles (e.g. Materialize CSS) can be applied
+   * Do not use shadow DOM, so global styles (e.g. Materialize CSS) can be applied.
    */
   createRenderRoot() { return this; }
 }

@@ -28,7 +28,7 @@
       <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
     </ItemGroup>
 
-    <Target Name="ViteBuild" BeforeTargets="CoreCompile">
+    <Target Name="ViteBuild" AfterTargets="Build">
         <Exec Command="npm i &amp;&amp; npm run build" />
     </Target>
 
