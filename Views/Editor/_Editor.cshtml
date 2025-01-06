@@ -23,54 +23,15 @@
 
   /* general layout overrides */
   html {
-    background-color: #263238 !important; /* blue-grey darken-4 */
+    background-color: #263238; /* #263238 blue-grey darken-4 */
   }
 
-  #code-title-bar {
-    height: 32px !important;
-  }
-
-  #code-title-bar > h6 {
-    line-height: 32px !important;
-  }
-
-  #console-title-bar {
-    height: 27px;
-  }
-
-  #console-title-bar > h6 {
-    line-height: 22px !important;
-  }
-
-  #run > i {
-    font-size: 52px !important;
-    left: -8px;
-  }
-
-  #share > i {
-    font-size: 32px !important;
-  }
-
-  #run, #share {
-    width: 36px;
-    padding: 0;
-  }
-
-  .console {
-    width:  100% !important;
-    height: calc(100% - 32px) !important;
-  }
-
-  .console > div {
+  .console > textarea {
+    height: calc(100% - 8px) !important;
     width: 100%;
-    height: 100%;
+    resize: none;
+    border: none;
     overflow: auto;
-  }
-
-  .material-symbols-outlined {
-    line-height: unset !important;
-    width: 36px !important;
-    position: relative;
   }
 </style>
 

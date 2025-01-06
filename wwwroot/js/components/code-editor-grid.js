@@ -3,13 +3,6 @@ import u from 'umbrellajs';
 import Split from 'split-grid';
 
 class CodeEditorGrid extends LitElement {
-  /**
-   * Reactive properties.
-   */
-  static properties = {
-    firstGutterClass: '',
-  };
-
   constructor() {
     super();
     this.splitGrid = null;
@@ -21,7 +14,7 @@ class CodeEditorGrid extends LitElement {
       snapOffset: 0,
       rowGutters: [{
         track: 1,
-        element: u(`.${this.firstGutterClass}`).first(),
+        element: u('.gutter-row-1').first(),
       }]
     })
 

@@ -1,45 +1,3 @@
-.pl0, .p0 { padding-left: 0 !important; }
-.pr0, .p0 { padding-right: 0 !important; }
-.pt0, .p0 { padding-top: 0 !important; }
-.pb0, .p0 { padding-bottom: 0 !important; }
-
-.pl1, .p1 { padding-left: 5px !important; }
-.pr1, .p1 { padding-right: 5px !important; }
-.pt1, .p1 { padding-top: 5px !important; }
-.pb1, .p1 { padding-bottom: 5px !important; }
-
-.pl2, .p2 { padding-left: 10px !important; }
-.pr2, .p2 { padding-right: 10px !important; }
-.pt2, .p2 { padding-top: 10px !important; }
-.pb2, .p2 { padding-bottom: 10px !important; }
-
-.pl3, .p3 { padding-left: 15px !important; }
-.pr3, .p3 { padding-right: 15px !important; }
-.pt3, .p3 { padding-top: 15px !important; }
-.pb3, .p3 { padding-bottom: 15px !important; }
-
-.ml0, .m0 { margin-left: 0 !important; }
-.mr0, .m0 { margin-right: 0 !important; }
-.mt0, .m0 { margin-top: 0 !important; }
-.mb0, .m0 { margin-bottom: 0 !important; }
-
-.ml1, .m1 { margin-left: 5px !important; }
-.mr1, .m1 { margin-right: 5px !important; }
-.mt1, .m1 { margin-top: 5px !important; }
-.mb1, .m1 { margin-bottom: 5px !important; }
-
-.ml2, .m2 { margin-left: 10px !important; }
-.mr2, .m2 { margin-right: 10px !important; }
-.mt2, .m2 { margin-top: 10px !important; }
-.mb2, .m2 { margin-bottom: 10px !important; }
-
-.ml3, .m3 { margin-left: 15px !important; }
-.mr3, .m3 { margin-right: 15px !important; }
-.mt3, .m3 { margin-top: 15px !important; }
-.mb3, .m3 { margin-bottom: 15px !important; }
-
-.mt10 { margin-top: 50px !important; }
-
 .btn-link {
   line-height: unset;
   height: unset;
@@ -61,15 +19,14 @@
   background: unset;
 }
 
+.btn-square {
+  width: 36px;
+  padding: 0;
+}
+
 .brand-logo {
   left: unset !important;
   transform: unset !important;
-}
-
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none !important;
-  }
 }
 
 .d-flex {
@@ -88,4 +45,9 @@
   .d-flex {
     display: block;
   }
+}
+
+.material-symbols-outlined {
+  line-height: unset !important;
+  position: relative;
 }

@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import u from 'umbrellajs';
+import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/split-panel/split-panel.js';
 
 import * as signalR from "@microsoft/signalr";
 
@@ -47,7 +47,7 @@ export class CodeEditorPage extends LitElement {
    * Runs the code.
    */
   run() {
-    this.consoleOutput = '';
+    this.consoleOutput = '\n';
 
     const _this = this;
     const outputDiv = u('#console-output').first();
@@ -55,7 +55,7 @@ export class CodeEditorPage extends LitElement {
     const consoleLog = console.log;
     console.log = (...args) => {
       const height = outputDiv.clientHeight;
-      _this.consoleOutput += `${args.join('')}<br/>`;
+      _this.consoleOutput += `${args.join(' ').trim()}\n`;
       outputDiv.style.height = `${height}px`;
     }
 
@@ -109,49 +109,41 @@ export class CodeEditorPage extends LitElement {
         <div class="nav-wrapper">
           <ul class="left">
             <li>
-              <a id="run"
-                 class="btn btn-secondary ${this.runEnabled ? '' : 'disabled'}"
+              <a class="btn btn-square btn-secondary ${this.runEnabled ? '' : 'disabled'}"
                  title="Run code..."
                  @click=${this.run}>
-                <i class="material-symbols-outlined">play_arrow</i>
+                <i style="font-size: 52px !important; left: -8px;"
+                   class="material-symbols-outlined">play_arrow
+                </i>
               </a>
             </li>
           </ul>
           <ul class="right">
             <li>
-              <a id="share"
-                 class="btn btn-secondary"
+              <a class="btn btn-square btn-secondary"
                  title="Share session..."
                  @click=${this.share}>
-                <i class="material-symbols-outlined">content_paste_go</i>
+                <i style="font-size: 32px !important;"
+                   class="material-symbols-outlined">content_paste_go
+                </i>
               </a>
             </li>
           </ul>
         </div>
       </nav>
 
-      <code-editor-grid firstGutterClass="gutter-row-1">
+      <code-editor-grid>
         <div class="grid blue-grey darken-4">
           <div>
-            <nav id="code-title-bar" class="deep-purple darken-3">
-              <h6 class="pl2 m0">JavaScript</h6>
-            </nav>
-
-            <ace-editor style="height: calc(100% - 32px) !important"
-                        @content-changed=${this.onCodeChange}>
-            </ace-editor>
+            <ace-editor @content-changed=${this.onCodeChange}></ace-editor>
           </div>
 
           <div class="gutter-row-1 gutter-row-2"></div>
 
           <div class="console">
-            <nav id="console-title-bar" class="deep-purple darken-3">
-              <h6 class="pl2 m0">Console</h6>
-            </nav>
-
-            <div id="console-output" class="p3 blue-grey darken-4 white-text">
-              ${unsafeHTML(this.consoleOutput)}
-            </div>
+            <textarea id="console-output" class="p3 blue-grey darken-4 white-text" readonly>
+              ${this.consoleOutput}
+            </textarea>
           </div>
         </div>
       </code-editor-grid>
