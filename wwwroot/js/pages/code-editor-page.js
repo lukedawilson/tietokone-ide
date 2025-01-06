@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
+import Split from 'split-grid';
 import u from 'umbrellajs';
-import 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/components/split-panel/split-panel.js';
 
 import * as signalR from "@microsoft/signalr";
 
@@ -16,17 +16,33 @@ export class CodeEditorPage extends LitElement {
 
   constructor() {
     super();
+
     this.connection = null;
+    this.splitGrid = null;
   }
 
   /**
-   * Initialises the websocket connection.
+   * Initialises the split grid and websocket connection.
    */
   async firstUpdated(_) {
-    const _this = this;
+    // initialise and configure split grid
+    this.splitGrid = Split({
+      minSize: 0,
+      snapOffset: 0,
+      rowGutters: [{
+        track: 1,
+        element: u('.gutter-row-1').first(),
+      }]
+    })
 
+    window.addEventListener('resize', this.setViewportHeightCssVar);
+    window.addEventListener('orientationchange', this.setViewportHeightCssVar);
+    this.setViewportHeightCssVar();
+
+    // configure ws connection
     this.connection = new signalR.HubConnectionBuilder().withUrl("/code-updates").build();
 
+    const _this = this;
     this.connection.on("ReceiveMessage", (connectionId, message) => {
       if (connectionId === this.connection.connectionId) {
         return;
@@ -80,7 +96,7 @@ export class CodeEditorPage extends LitElement {
   }
 
   /**
-   * Cleans up the websocket connection.
+   * Cleans up the split grid and websocket connection.
    */
   async disconnectedCallback() {
     super.disconnectedCallback();
@@ -89,6 +105,14 @@ export class CodeEditorPage extends LitElement {
       await this.connection.stop();
       this.connection = null;
     }
+
+    if (this.splitGrid) {
+      this.splitGrid.destroy();
+      this.splitGrid = null;
+    }
+
+    window.removeEventListener('resize', this.setViewportHeightCssVar);
+    window.removeEventListener('orientationchange', this.setViewportHeightCssVar);
   }
 
   async onCodeChange(event) {
@@ -101,6 +125,13 @@ export class CodeEditorPage extends LitElement {
 
   aceEditor() {
     return u('ace-editor').first();
+  }
+
+  /**
+   * This is used by the grid layout CSS.
+   */
+  setViewportHeightCssVar() {
+    u(document.documentElement).first().style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
   }
 
   render() {
@@ -131,22 +162,16 @@ export class CodeEditorPage extends LitElement {
           </ul>
         </div>
       </nav>
+      
+      <div class="grid blue-grey darken-4">
+        <ace-editor @content-changed=${this.onCodeChange}></ace-editor>
 
-      <code-editor-grid>
-        <div class="grid blue-grey darken-4">
-          <div>
-            <ace-editor @content-changed=${this.onCodeChange}></ace-editor>
-          </div>
+        <div class="gutter-row-1 gutter-row-2"></div>
 
-          <div class="gutter-row-1 gutter-row-2"></div>
-
-          <div class="console">
-            <textarea id="console-output" class="p3 blue-grey darken-4 white-text" readonly>
-              ${this.consoleOutput}
-            </textarea>
-          </div>
-        </div>
-      </code-editor-grid>
+        <textarea id="console-output" class="p3 blue-grey darken-4 white-text console" readonly>
+          ${this.consoleOutput}
+        </textarea>
+      </div>
   `;
   }
 
