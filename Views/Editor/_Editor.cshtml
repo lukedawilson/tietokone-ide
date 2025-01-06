@@ -1,74 +1,77 @@
 ﻿@model Session
 
-<style scoped>
+<style>
+  /* grid layout */
+  .grid {
+    display: grid;
+    grid-template-rows: 1fr 5px 1fr;
+    height: calc(var(--vh, 1vh) * 100 - 128px) !important;
+  }
+
+  .gutter-row-1, .gutter-row-2 {
+    cursor: row-resize;
+    border: solid 1px #6200ea; /* purple darken-4 */
+  }
+
+  .gutter-row-1 {
+    grid-column: 1/-1;
+  }
+
+  .gutter-row-2 {
+    grid-row: 2;
+  }
+
+  /* general layout overrides */
   html {
     background-color: #263238 !important; /* blue-grey darken-4 */
   }
+
+  #code-title-bar {
+    height: 32px !important;
+  }
+
+  #code-title-bar > h6 {
+    line-height: 32px !important;
+  }
+
+  #console-title-bar {
+    height: 27px;
+  }
+
+  #console-title-bar > h6 {
+    line-height: 22px !important;
+  }
+
+  #run > i {
+    font-size: 52px !important;
+    left: -8px;
+  }
+
+  #share > i {
+    font-size: 32px !important;
+  }
+
+  #run, #share {
+    width: 36px;
+    padding: 0;
+  }
+
+  .console {
+    width:  100% !important;
+    height: calc(100% - 32px) !important;
+  }
+
+  .console > div {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  .material-symbols-outlined {
+    line-height: unset !important;
+    width: 36px !important;
+    position: relative;
+  }
 </style>
 
-<nav class="indigo lighten-1">
-  <div class="nav-wrapper">
-    <ul class="left">
-      <li>
-        <a id="run"
-           class="btn btn-secondary disabled"
-           title="Run code..."
-           onclick="onRunButtonClick()">
-          <i class="material-symbols-outlined">play_arrow</i>
-        </a>
-      </li>
-    </ul>
-    <ul class="right">
-      <li>
-        <a id="share"
-           class="btn btn-secondary"
-           title="Share session..."
-           onclick="onShareButtonClick()">
-          <i class="material-symbols-outlined">content_paste_go</i>
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<split-grid-wrapper first-gutter-class="gutter-row-1">
-  <div class="grid blue-grey darken-4">
-    <div>
-      <nav id="code-title-bar" class="deep-purple darken-3">
-        <h6 class="pl2 m0">JavaScript</h6>
-      </nav>
-
-      <code-editor id="code-editor" session-code="@Model.Code"></code-editor>
-    </div>
-
-    <div class="gutter-row-1 gutter-row-2"></div>
-
-    <div class="console">
-      <nav id="console-title-bar" class="deep-purple darken-3">
-        <h6 class="pl2 m0">Console</h6>
-      </nav>
-
-      <div id="console-output"
-           class="p3 blue-grey darken-4 white-text"
-           readonly="readonly"
-           data-name="output"
-           data-title="Output">
-      </div>
-    </div>
-  </div>
-</split-grid-wrapper>
-
-<script>
-  function onRunButtonClick() {
-    const editor = u('#code-editor').first();
-    const output = u('#console-output').first();
-
-    output.innerHTML = '';
-    editor.run(output);
-  }
-
-  async function onShareButtonClick() {
-    await navigator.clipboard.writeText('@Model.Code');
-    M.toast({html: 'Session code copied to clipboard!'})
-  }
-</script>
+<code-editor-page sessionCode="@Model.Code"></code-editor-page>

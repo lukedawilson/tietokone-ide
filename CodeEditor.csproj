@@ -15,6 +15,10 @@
         <_ContentIncludedByDefault Remove="wwwroot\js\components\code-mirror-editor.js" />
         <_ContentIncludedByDefault Remove="wwwroot\js\components\code-editor.js" />
         <_ContentIncludedByDefault Remove="wwwroot\css\views\editor.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\main.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\styles.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dev\js-deps.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dev\vite.js" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,7 +28,7 @@
       <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
     </ItemGroup>
 
-    <Target Name="ViteBuild" AfterTargets="Build">
+    <Target Name="ViteBuild" BeforeTargets="CoreCompile">
         <Exec Command="npm i &amp;&amp; npm run build" />
     </Target>
 

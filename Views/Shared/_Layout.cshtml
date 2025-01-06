@@ -16,12 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- custom CSS -->
-    <environment include="development">
-      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    </environment>
-    <environment exclude="development">
-      <link rel="stylesheet" href="~/dist/styles.css" asp-append-version="true" />
-    </environment>
+    <link rel="stylesheet" href="~/dist/styles.css" asp-append-version="true" />
   </head>
 
   <body class="black white-text">
@@ -38,8 +33,6 @@
         </div>
       </nav>
     </div>
-
-    <umbrella-js-wrapper></umbrella-js-wrapper>
 
     <!-- main content -->
     <div id="main-content">
