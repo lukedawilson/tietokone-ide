@@ -23,6 +23,7 @@ class AceEditor extends LitElement {
     this.editor = ace.edit(u(this.renderRoot.querySelector('#editor')).first(), {
       mode: 'ace/mode/javascript',
       theme: 'ace/theme/monokai',
+      showPrintMargin: false,
     });
     this.editor.renderer.attachToShadowRoot();
 

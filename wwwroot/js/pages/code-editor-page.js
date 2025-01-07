@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
-import Split from 'split-grid';
 import u from 'umbrellajs';
 
+import Split from 'split-grid';
 import * as signalR from "@microsoft/signalr";
 
 export class CodeEditorPage extends LitElement {
@@ -91,8 +91,8 @@ export class CodeEditorPage extends LitElement {
    * Copies the session code to the clipboard.
    */
   share() {
-    navigator.clipboard.writeText(this.sessionCode);
-    M.toast({html: 'Session code copied to clipboard!'})
+    navigator.clipboard.writeText(`${window.location.origin}/editor/${this.sessionCode}`);
+    M.toast({html: 'Session link copied to clipboard!'})
   }
 
   /**
@@ -143,9 +143,7 @@ export class CodeEditorPage extends LitElement {
               <a class="btn btn-square btn-secondary ${this.runEnabled ? '' : 'disabled'}"
                  title="Run code..."
                  @click=${this.run}>
-                <i style="font-size: 52px !important; left: -8px;"
-                   class="material-symbols-outlined">play_arrow
-                </i>
+                <i class="material-icons">play_arrow</i>
               </a>
             </li>
           </ul>
@@ -154,9 +152,7 @@ export class CodeEditorPage extends LitElement {
               <a class="btn btn-square btn-secondary"
                  title="Share session..."
                  @click=${this.share}>
-                <i style="font-size: 32px !important;"
-                   class="material-symbols-outlined">content_paste_go
-                </i>
+                <i class="material-icons">share</i>
               </a>
             </li>
           </ul>
