@@ -1,9 +1,11 @@
+using Newtonsoft.Json;
+
 namespace CodeEditor.Models;
 
 public class Session
 {
     public Guid Code { get; set; }
-    public string Content { get; private set; }
+    public List<string> Content { get; } = new();
 
     public static Session Create() => Upsert(new Session { Code = Guid.NewGuid() });
 
@@ -17,9 +19,39 @@ public class Session
         return Upsert(session);
     }
 
-    public void UpdateContent(string content)
+    public void ApplyUpdate(string @event)
     {
-        Content = content;
+        var update = JsonConvert.DeserializeAnonymousType(@event, new
+        {
+            start = new { row = 0, column = 0 },
+            end = new { row = 0, column = 0 },
+            action = "",
+            lines = Array.Empty<string>(),
+        });
+
+        switch (update.action) {
+            case "insert":
+                if (update.start.row == Content.Count)
+                {
+                    Content.AddRange(update.lines);
+                }
+                else
+                {
+                    Content[update.start.row] = Content[update.start.row].Insert(update.start.column, update.lines[0]);
+                    Content.InsertRange(update.start.row + 1, update.lines.Skip(1));
+                }
+                break;
+
+            case "remove":
+                Content[update.start.row] = Content[update.start.row].Remove(update.start.column, update.end.column - update.start.column);
+                if (update.start.row != update.end.row)
+                {
+                    Content.RemoveRange(update.start.row + 1, update.end.row - update.start.row);
+                }
+
+                break;
+        }
+
         Upsert(this);
     }
 

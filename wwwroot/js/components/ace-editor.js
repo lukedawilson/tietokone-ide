@@ -16,7 +16,9 @@ class AceEditor extends LitElement {
 
   constructor() {
     super();
+
     this.editor = null;
+    this.lastUpdate = null;
   }
 
   firstUpdated(_) {
@@ -28,10 +30,16 @@ class AceEditor extends LitElement {
     this.editor.renderer.attachToShadowRoot();
 
     const _this = this;
-    this.editor.session.on('change', () => {
-      this.dispatchEvent(new CustomEvent('content-changed', {
-        detail: { value: this.value(), isRemote: !_this.editor.curOp?.command?.name }
-      }));
+    this.editor.session.on('change', event => {
+      const update = JSON.stringify({ ...event, id: undefined });
+      if (update === _this.lastUpdate) {
+        return;
+      }
+
+      _this.lastUpdate = update;
+
+      const isRemote = !_this.editor.curOp?.command?.name;
+      _this.dispatchEvent(new CustomEvent('content-changed', { detail: { update, value: _this.value(), isRemote } }));
     });
   }
 
@@ -47,8 +55,20 @@ class AceEditor extends LitElement {
     return this.editor.getValue();
   }
 
-  setValue(value) {
-    this.editor.setValue(value, 1);
+  applyUpdate(serialisedEvent) {
+    const event = JSON.parse(serialisedEvent);
+
+    switch (event.action) {
+      case 'init':
+        this.editor.setValue(event.value, -1);
+        break;
+      case 'insert':
+        this.editor.session.insert(event.start, event.lines.join('\n'));
+        break;
+      case 'remove':
+        this.editor.session.remove({ start: event.start, end: event.end });
+        break;
+    }
   }
 
   render() {

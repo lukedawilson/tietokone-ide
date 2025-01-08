@@ -48,7 +48,7 @@ export class CodeEditorPage extends LitElement {
         return;
       }
 
-      _this.aceEditor().setValue(message);
+      _this.aceEditor().applyUpdate(message);
     });
 
     this.connection.onclose(error => {
@@ -119,7 +119,7 @@ export class CodeEditorPage extends LitElement {
     this.runEnabled = !!event.detail.value;
 
     if (!event.detail.isRemote) {
-      await this.connection.invoke('SendMessage', this.sessionCode, event.detail.value)
+      await this.connection.invoke('SendMessage', this.sessionCode, event.detail.update);
     }
   }
 
