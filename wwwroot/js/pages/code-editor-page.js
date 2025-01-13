@@ -19,6 +19,12 @@ export class CodeEditorPage extends LitElement {
 
     this.connection = null;
     this.splitGrid = null;
+
+    // if the user uses the browser back arrow, the stale DOM will still be there
+    const existing = u('#code-editor-page');
+    if (existing.length) {
+      existing.first().remove();
+    }
   }
 
   /**
@@ -136,37 +142,39 @@ export class CodeEditorPage extends LitElement {
 
   render() {
     return html`
-      <nav class="indigo lighten-1">
-        <div class="nav-wrapper">
-          <ul class="left">
-            <li>
-              <a class="btn btn-square btn-secondary ${this.runEnabled ? '' : 'disabled'}"
-                 title="Run code..."
-                 @click=${this.run}>
-                <i class="material-icons">play_arrow</i>
-              </a>
-            </li>
-          </ul>
-          <ul class="right">
-            <li>
-              <a class="btn btn-square btn-secondary"
-                 title="Share session..."
-                 @click=${this.share}>
-                <i class="material-icons">share</i>
-              </a>
-            </li>
-          </ul>
+      <div id="code-editor-page">
+        <nav class="indigo lighten-1">
+          <div class="nav-wrapper">
+            <ul class="left">
+              <li>
+                <a class="btn btn-square btn-secondary ${this.runEnabled ? '' : 'disabled'}"
+                   title="Run code..."
+                   @click=${this.run}>
+                  <i class="material-icons">play_arrow</i>
+                </a>
+              </li>
+            </ul>
+            <ul class="right">
+              <li>
+                <a class="btn btn-square btn-secondary"
+                   title="Share session..."
+                   @click=${this.share}>
+                  <i class="material-icons">share</i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="grid blue-grey darken-4">
+          <code-editor @content-changed=${this.onCodeChange}></code-editor>
+
+          <div class="gutter-row-1 gutter-row-2"></div>
+
+          <textarea id="console-output" class="p3 blue-grey darken-4 white-text console" readonly>
+            ${this.consoleOutput}
+          </textarea>
         </div>
-      </nav>
-      
-      <div class="grid blue-grey darken-4">
-        <code-editor @content-changed=${this.onCodeChange}></code-editor>
-
-        <div class="gutter-row-1 gutter-row-2"></div>
-
-        <textarea id="console-output" class="p3 blue-grey darken-4 white-text console" readonly>
-          ${this.consoleOutput}
-        </textarea>
       </div>
   `;
   }
