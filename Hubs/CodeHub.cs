@@ -1,6 +1,5 @@
 using CodeEditor.Models;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 
 namespace CodeEditor.Hubs;
 
@@ -16,16 +15,16 @@ public class CodeHub: Hub
         await Clients.Caller.SendAsync(
             "ReceiveMessage",
             null,
-            JsonConvert.SerializeObject(new { action = "init", value = string.Join('\n', session.Content) }));
+            new { action = "init", value = session.DocString() });
     }
 
-    public async Task SendMessage(Guid sessionCode, string @event)
+    public async Task SendMessage(Guid sessionCode, Update update)
     {
         var session = Session.Get(sessionCode);
         if (session == null)
             return;
 
-        session.ApplyUpdate(@event);
-        await Clients.Group(sessionCode.ToString()).SendAsync("ReceiveMessage", Context.ConnectionId, @event);
+        session.ApplyDocUpdate(update);
+        await Clients.Group(sessionCode.ToString()).SendAsync("ReceiveMessage", Context.ConnectionId, update);
     }
 }

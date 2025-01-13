@@ -1,13 +1,15 @@
-using Newtonsoft.Json;
-
 namespace CodeEditor.Models;
 
 public class Session
 {
     public Guid Code { get; set; }
-    public List<string> Content { get; } = new();
+    public Document Document { get; set; }
 
-    public static Session Create() => Upsert(new Session { Code = Guid.NewGuid() });
+    public static Session Create() => Upsert(new Session
+    {
+        Code = Guid.NewGuid(),
+        Document = new Document(),
+    });
 
     public static Session Get(Guid code)
     {
@@ -19,39 +21,11 @@ public class Session
         return Upsert(session);
     }
 
-    public void ApplyUpdate(string @event)
+    public string DocString() => Document.ToString();
+
+    public void ApplyDocUpdate(Update update)
     {
-        var update = JsonConvert.DeserializeAnonymousType(@event, new
-        {
-            start = new { row = 0, column = 0 },
-            end = new { row = 0, column = 0 },
-            action = "",
-            lines = Array.Empty<string>(),
-        });
-
-        switch (update.action) {
-            case "insert":
-                if (update.start.row == Content.Count)
-                {
-                    Content.AddRange(update.lines);
-                }
-                else
-                {
-                    Content[update.start.row] = Content[update.start.row].Insert(update.start.column, update.lines[0]);
-                    Content.InsertRange(update.start.row + 1, update.lines.Skip(1));
-                }
-                break;
-
-            case "remove":
-                Content[update.start.row] = Content[update.start.row].Remove(update.start.column, update.end.column - update.start.column);
-                if (update.start.row != update.end.row)
-                {
-                    Content.RemoveRange(update.start.row + 1, update.end.row - update.start.row);
-                }
-
-                break;
-        }
-
+        Document.Update(update);
         Upsert(this);
     }
 
