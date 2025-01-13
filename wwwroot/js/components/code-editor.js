@@ -1,11 +1,11 @@
 import { LitElement, html } from "lit";
 import u from 'umbrellajs';
 
-import ace from "ace-builds/src-noconflict/ace";
+import ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 
-class AceEditor extends LitElement {
+class CodeEditor extends LitElement {
   /**
    * Reactive properties.
    */
@@ -67,4 +67,4 @@ class AceEditor extends LitElement {
   }
 }
 
-customElements.define('ace-editor', AceEditor);
+customElements.define('code-editor', CodeEditor);

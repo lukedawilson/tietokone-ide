@@ -124,7 +124,7 @@ export class CodeEditorPage extends LitElement {
   }
 
   aceEditor() {
-    return u('ace-editor').first();
+    return u('code-editor').first();
   }
 
   /**
@@ -160,7 +160,7 @@ export class CodeEditorPage extends LitElement {
       </nav>
       
       <div class="grid blue-grey darken-4">
-        <ace-editor @content-changed=${this.onCodeChange}></ace-editor>
+        <code-editor @content-changed=${this.onCodeChange}></code-editor>
 
         <div class="gutter-row-1 gutter-row-2"></div>
 
