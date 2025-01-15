@@ -4,6 +4,7 @@ import u from 'umbrellajs';
 import ace from 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/theme-github';
 
 class CodeEditor extends LitElement {
   /**
@@ -19,21 +20,33 @@ class CodeEditor extends LitElement {
     super();
 
     this.editor = null;
+    this.darkModeHandler = null;
   }
 
   firstUpdated(_) {
     this.editor = ace.edit(u(this.renderRoot.querySelector('#editor')).first(), {
       mode: 'ace/mode/javascript',
-      theme: 'ace/theme/monokai',
+      theme: localStorage.getItem('darkMode') === 'true' ? 'ace/theme/monokai' : 'ace/theme/github',
       showPrintMargin: false,
     });
     this.editor.renderer.attachToShadowRoot();
 
     const _this = this;
+
     this.editor.session.on('change', event => {
       const isRemote = !_this.editor.curOp?.command?.name;
       _this.dispatchEvent(new CustomEvent('content-changed', { detail: { update: event, value: _this.value(), isRemote } }));
     });
+
+    this.darkModeHandler = (event) => {
+      console.log(event.detail, _this.editor)
+      if (event.detail.darkMode) {
+        _this.editor.setTheme('ace/theme/monokai');
+      } else {
+        _this.editor.setTheme('ace/theme/github');
+      }
+    }
+    document.addEventListener('darkModeToggled', this.darkModeHandler);
   }
 
   updated(changedProperties) {
@@ -47,6 +60,11 @@ class CodeEditor extends LitElement {
       this.editor.destroy();
       this.editor.container.remove();
       this.editor = null;
+    }
+
+    if (this.darkModeHandler) {
+      document.removeEventListener('darkModeToggled', this.darkModeHandler);
+      this.darkModeHandler = null;
     }
   }
 

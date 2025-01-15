@@ -10,7 +10,7 @@
 
   .gutter-row-1, .gutter-row-2 {
     cursor: row-resize;
-    border: solid 1px #6200ea; /* purple darken-4 */
+    border: solid 1px #e57373; /* red lighten-2 */
   }
 
   .gutter-row-1 {
@@ -23,7 +23,30 @@
 
   /* general layout overrides */
   html {
-    background-color: #263238; /* #263238 blue-grey darken-4 */
+    background-color: white !important;
+
+    &.dark {
+      .gutter-row-1, .gutter-row-2 {
+        border: solid 1px #4db6ac; /* teal lighten-2 */
+      }
+
+      background-color: #263238 !important; /* #263238 blue-grey darken-4 */
+
+      .toolbar {
+        background-color: #80cbc4 !important; /* teal lighten-3 */
+      }
+
+      .console {
+        padding-left: 15px;
+        padding-right: 15px;
+        color: #ffffff !important; /* white */
+        background-color: #263238 !important; /* #263238 blue-grey darken-4 */
+      }
+    }
+  }
+
+  .toolbar {
+    background-color: #ef9a9a !important; /* red lighten-3 */
   }
 
   .console {
@@ -32,6 +55,9 @@
     resize: none;
     border: none;
     overflow: auto;
+
+    color: #01579b !important; /* light-blue darken-4 */
+    background-color: #fafafa !important; /* grey lighten-5 */
   }
 
   .console:focus {

@@ -151,7 +151,7 @@ export class CodeEditorPage extends LitElement {
   render() {
     return html`
       <div id="code-editor-page">
-        <nav class="indigo lighten-1">
+        <nav class="toolbar">
           <div class="nav-wrapper">
             <ul class="left">
               <li>
@@ -174,7 +174,7 @@ export class CodeEditorPage extends LitElement {
           </div>
         </nav>
 
-        <div class="grid blue-grey darken-4">
+        <div class="grid">
           <code-editor disabled=${this.remoteTyping} @content-changed=${this.onCodeChange}></code-editor>
           <span class="material-icons"
                 style="position: absolute;
@@ -187,7 +187,7 @@ export class CodeEditorPage extends LitElement {
 
           <div class="gutter-row-1 gutter-row-2"></div>
 
-          <textarea id="console-output" class="p3 blue-grey darken-4 white-text console" readonly>
+          <textarea id="console-output" class="console" readonly>
             ${this.consoleOutput}
           </textarea>
         </div>
