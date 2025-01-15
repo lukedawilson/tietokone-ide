@@ -12,6 +12,7 @@ class CodeEditor extends LitElement {
   static properties = {
     style: '',
     class: '',
+    disabled: false,
   };
 
   constructor() {
@@ -33,6 +34,12 @@ class CodeEditor extends LitElement {
       const isRemote = !_this.editor.curOp?.command?.name;
       _this.dispatchEvent(new CustomEvent('content-changed', { detail: { update: event, value: _this.value(), isRemote } }));
     });
+  }
+
+  updated(changedProperties) {
+    if (changedProperties.has('disabled')) {
+      this.editor.setReadOnly(this.disabled === 'true');
+    }
   }
 
   disconnectedCallback() {

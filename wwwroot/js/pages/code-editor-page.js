@@ -12,6 +12,7 @@ export class CodeEditorPage extends LitElement {
     sessionCode: '',
     runEnabled: false,
     consoleOutput: '',
+    remoteTyping: false,
   };
 
   constructor() {
@@ -126,6 +127,13 @@ export class CodeEditorPage extends LitElement {
 
     if (!event.detail.isRemote) {
       await this.connection.invoke('SendMessage', this.sessionCode, event.detail.update);
+    } else {
+      if (this.debounce) {
+        clearTimeout(this.debounce);
+      }
+
+      this.remoteTyping = true;
+      this.debounce = setTimeout(() => this.remoteTyping = false, 500);
     }
   }
 
@@ -167,7 +175,15 @@ export class CodeEditorPage extends LitElement {
         </nav>
 
         <div class="grid blue-grey darken-4">
-          <code-editor @content-changed=${this.onCodeChange}></code-editor>
+          <code-editor disabled=${this.remoteTyping} @content-changed=${this.onCodeChange}></code-editor>
+          <span class="material-icons"
+                style="position: absolute;
+                       top: 140px;
+                       right: 10px;
+                       z-index: 1000;
+                       ${!this.remoteTyping ? 'display: none' : ''}">
+            lock_outline
+          </span>
 
           <div class="gutter-row-1 gutter-row-2"></div>
 
