@@ -31,53 +31,51 @@
   position: relative;
 }
 
+nav {
+  background-color: #2196f3; /* blue */
+}
+
+.btn,
+span.lever::after {
+  background-color: #2196f3; /* blue */
+}
+
+.btn:hover {
+  background-color: #42a5f5; /* blue lighten-1 */
+}
+
+.card {
+  background-color: #fafafa; /* grey lighten-5 */
+}
+
 html {
   &.dark {
-    background-color: #202123;
+    background-color: #424242; /* grey darken-3 */
     color: #fff;
 
     nav {
-      background-color: #26A69A;
+      background-color: #212121; /* grey darken-4 */
     }
 
     .card {
-      background-color: rgba(255,255,255,0.2);
+      background-color: #757575; /* grey darken-1 */
+    }
+
+    .lever {
+      background-color: #616161 !important; /* grey darken-2 */
     }
 
     .btn,
     span.lever::after {
-      background-color: #EE6F73 !important;
+      background-color: #1976d2 !important; /* blue darken-2 */
+    }
+
+    .btn:hover {
+      background-color: #1e88e5 !important; /* blue darken-1 */
     }
 
     .divider {
       opacity: 0.2;
-    }
-
-    .sidenav {
-      background-color: #2D2D31;
-      li {
-        a {
-          &:not(.subheader){
-            color: #89B2F5;
-            &:hover {
-              background-color: #3B4043;
-            }
-          }
-          &.subheader {
-            color:#9AA0A6;
-          }
-          .material-icons {
-            color: #9AA0A6;
-          }
-        }
-      }
-    }
-    .collection {
-      border: 1px solid rgba(255,255,255,0.2);
-      .collection-item {
-        background-color: rgba(255,255,255,0.2);
-        border-bottom: 1px solid rgba(255,255,255,0.2);;
-      }
     }
   }
 }
