@@ -74,24 +74,22 @@ export class CodeEditorPage extends LitElement {
 
     const _this = this;
     const outputDiv = u('#console-output').first();
-
-    const consoleLog = console.log;
-    console.log = (...args) => {
+    const logToOutput = args => {
       const height = outputDiv.clientHeight;
       _this.consoleOutput += `${args.join(' ').trim()}\n`;
       outputDiv.style.height = `${height}px`;
-    }
+    };
 
-    try {
-      const code = this.aceEditor().value();
-      new Function(code)();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      console.log();
-      console.log('Execution complete.');
-      console.log = consoleLog;
-    }
+    const scriptBlob = new Blob([
+      `self.console.log = (...args) => self.postMessage({ value: args });\n`,
+      this.aceEditor().value()
+    ], {
+      type: 'application/javascript'
+    });
+
+    const worker = new Worker(URL.createObjectURL(scriptBlob));
+    worker.onmessage = e => logToOutput(e.data.value);
+    worker.onerror = e => logToOutput([e.message]);
   }
 
   /**
