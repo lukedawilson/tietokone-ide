@@ -153,7 +153,7 @@ export class CodeEditorPage extends LitElement {
           <div class="nav-wrapper">
             <ul class="left">
               <li>
-                <a class="btn btn-square btn-secondary ${this.runEnabled ? '' : 'disabled'}"
+                <a class="btn btn-square btn-secondary ${/*this.runEnabled ? '' :*/ 'disabled'}"
                    title="Run code..."
                    @click=${this.run}>
                   <i class="material-icons">play_arrow</i>
