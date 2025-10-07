@@ -4,7 +4,7 @@
   /* grid layout */
   .grid {
     display: grid;
-    grid-template-rows: 1fr 5px 1fr;
+    grid-template-rows: @(Model?.EnableCodeExecution == true ? "1fr 5px 1fr" : "1fr");
     height: calc(var(--vh, 1vh) * 100 - 128px) !important;
   }
 
@@ -67,4 +67,7 @@
   }
 </style>
 
-<code-editor-page sessionCode="@Model.Code"></code-editor-page>
+@if (Model != null)
+{
+  <code-editor-page enableCodeExecution="@Model.EnableCodeExecution" sessionCode="@Model.Code"></code-editor-page>
+}

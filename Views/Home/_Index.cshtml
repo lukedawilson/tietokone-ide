@@ -21,9 +21,16 @@
         <div class="card-content flex-1">
           <span class="card-title">Create session</span>
           <p>This will create a new session, with a unique ID, that others can join.</p>
+          <div class="input-field switch">
+            <label class="white-text">
+              Enable code execution
+              <input type="checkbox" name="enableCodeExecution" value="true" checked form="new-session" />
+              <span class="lever" style="margin-left: 6px; top: -1px"></span>
+            </label>
+          </div>
         </div>
         <div class="card-action">
-          <form action="/sessions" method="POST" hx-post="/sessions" hx-target="#main-content" hx-push-url="true">
+          <form id="new-session" action="/sessions" method="POST" hx-post="/sessions" hx-target="#main-content" hx-push-url="true">
             <button class="btn btn-primary" type="submit">Create</button>
           </form>
         </div>

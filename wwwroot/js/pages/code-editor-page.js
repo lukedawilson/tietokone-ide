@@ -9,6 +9,7 @@ export class CodeEditorPage extends LitElement {
    * Reactive properties.
    */
   static properties = {
+    enableCodeExecution: false,
     sessionCode: '',
     runEnabled: false,
     consoleOutput: '',
@@ -152,8 +153,8 @@ export class CodeEditorPage extends LitElement {
         <nav class="toolbar">
           <div class="nav-wrapper">
             <ul class="left">
-              <li>
-                <a class="btn btn-square btn-secondary ${/*this.runEnabled ? '' :*/ 'disabled'}"
+              <li style=${`display: ${this.enableCodeExecution ? 'list-item' : 'none'}`}>
+                <a class="btn btn-square btn-secondary ${(!this.runEnabled ? 'disabled' : '')}"
                    title="Run code..."
                    @click=${this.run}>
                   <i class="material-icons">play_arrow</i>
@@ -183,11 +184,13 @@ export class CodeEditorPage extends LitElement {
             lock_outline
           </span>
 
-          <div class="gutter-row-1 gutter-row-2"></div>
+          ${this.enableCodeExecution ? html`
+            <div class="gutter-row-1 gutter-row-2"></div>
 
-          <textarea id="console-output" class="console" readonly>
-            ${this.consoleOutput}
-          </textarea>
+            <textarea id="console-output" class="console" readonly>
+              ${this.consoleOutput}
+            </textarea>
+          ` : html``}
         </div>
       </div>
   `;

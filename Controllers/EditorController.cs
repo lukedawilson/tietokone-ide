@@ -6,12 +6,15 @@ namespace CodeEditor.Controllers;
 public class EditorController : HtmxController
 {
     [HttpGet("editor/{sessionCode}")]
-    public IActionResult Index(Guid sessionCode) => HtmxView("_Editor", new Session { Code = sessionCode });
+    public IActionResult Index(Guid sessionCode)
+    {
+        return HtmxView("_Editor", Session.Get(sessionCode));
+    }
 
     [HttpPost("sessions")]
-    public IActionResult CreateSession()
+    public IActionResult CreateSession(bool enableCodeExecution)
     {
-        var session = Session.Create();
+        var session = Session.Create(enableCodeExecution);
         return RedirectToAction("Index", new { sessionCode = session.Code });
     }
 
@@ -20,9 +23,7 @@ public class EditorController : HtmxController
     {
         var session = Session.Get(code);
         if (session == null)
-        {
             return BadRequest("Session not found");
-        }
 
         return RedirectToAction("Index", new { sessionCode = code });
     }

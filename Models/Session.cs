@@ -4,11 +4,13 @@ public class Session
 {
     public Guid Code { get; set; }
     public Document Document { get; set; }
+    public bool EnableCodeExecution { get; set; }
 
-    public static Session Create() => Upsert(new Session
+    public static Session Create(bool enableCodeExecution) => Upsert(new Session
     {
         Code = Guid.NewGuid(),
         Document = new Document(),
+        EnableCodeExecution = enableCodeExecution,
     });
 
     public static Session Get(Guid code)
