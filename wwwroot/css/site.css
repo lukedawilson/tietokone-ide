@@ -48,10 +48,18 @@ span.lever::after {
   background-color: #fafafa; /* grey lighten-5 */
 }
 
+label {
+  color: #202020 !important;
+}
+
 html {
   &.dark {
     background-color: #424242; /* grey darken-3 */
     color: #fff;
+
+    label {
+      color: #fff !important;
+    }
 
     nav {
       background-color: #212121; /* grey darken-4 */
