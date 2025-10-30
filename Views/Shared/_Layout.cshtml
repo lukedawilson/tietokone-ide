@@ -45,7 +45,7 @@
           }
         }
 
-        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: !isDarkMode } }));
+        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: !!localStorage.getItem('darkMode') } }));
       }
 
       document.addEventListener('DOMContentLoaded', () => setDarkMode(false));
