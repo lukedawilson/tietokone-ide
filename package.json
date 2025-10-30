@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "@microsoft/signalr": "^8.0.7",
+    "@vaadin/split-layout": "^24.9.4",
     "ace-builds": "^1.37.1",
     "lit": "^3.2.1",
     "material-icons": "^1.13.12",
-    "split-grid": "^1.0.11",
     "umbrellajs": "^3.3.3",
     "vite": "^6.0.6"
   },

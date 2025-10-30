@@ -1,8 +1,7 @@
 import { LitElement, html } from 'lit';
 import u from 'umbrellajs';
-
-import Split from 'split-grid';
-import * as signalR from "@microsoft/signalr";
+import * as signalR from '@microsoft/signalr';
+import '@vaadin/split-layout';
 
 export class CodeEditorPage extends LitElement {
   /**
@@ -20,7 +19,6 @@ export class CodeEditorPage extends LitElement {
     super();
 
     this.connection = null;
-    this.splitGrid = null;
 
     // if the user uses the browser back arrow, the stale DOM will still be there
     const existing = u('#code-editor-page');
@@ -33,16 +31,6 @@ export class CodeEditorPage extends LitElement {
    * Initialises the split grid and websocket connection.
    */
   async firstUpdated(_) {
-    // initialise and configure split grid
-    this.splitGrid = Split({
-      minSize: 0,
-      snapOffset: 0,
-      rowGutters: [{
-        track: 1,
-        element: u('.gutter-row-1').first(),
-      }]
-    })
-
     window.addEventListener('resize', this.setViewportHeightCssVar);
     window.addEventListener('orientationchange', this.setViewportHeightCssVar);
     this.setViewportHeightCssVar();
@@ -112,11 +100,6 @@ export class CodeEditorPage extends LitElement {
       this.connection = null;
     }
 
-    if (this.splitGrid) {
-      this.splitGrid.destroy();
-      this.splitGrid = null;
-    }
-
     window.removeEventListener('resize', this.setViewportHeightCssVar);
     window.removeEventListener('orientationchange', this.setViewportHeightCssVar);
   }
@@ -148,6 +131,17 @@ export class CodeEditorPage extends LitElement {
   }
 
   render() {
+    const lockIcon = html`
+      <span class="material-icons"
+            style="position: absolute;
+                   top: 140px;
+                   right: 10px;
+                   z-index: 1000;
+                   ${!this.remoteTyping ? 'display: none' : ''}">
+        lock_outline
+      </span>
+    `;
+
     return html`
       <div id="code-editor-page">
         <nav class="toolbar">
@@ -173,23 +167,22 @@ export class CodeEditorPage extends LitElement {
           </div>
         </nav>
 
-        <div class="grid">
-          <code-editor disabled=${this.remoteTyping} @content-changed=${this.onCodeChange}></code-editor>
-          <span class="material-icons"
-                style="position: absolute;
-                       top: 140px;
-                       right: 10px;
-                       z-index: 1000;
-                       ${!this.remoteTyping ? 'display: none' : ''}">
-            lock_outline
-          </span>
-
+        <div style="height: calc(100dvh - 128px) !important">
           ${this.enableCodeExecution ? html`
-            <div class="gutter-row-1 gutter-row-2"></div>
+            <vaadin-split-layout style="height: 100% !important" orientation="vertical">
+              <master-content>
+                <code-editor disabled=${this.remoteTyping} @content-changed=${this.onCodeChange}></code-editor>
+                ${lockIcon}
+              </master-content>
+              <detail-content>
+                <textarea id="console-output" class="console" readonly>${this.consoleOutput}</textarea>
+              </detail-content>
+            </vaadin-split-layout>
+          ` : html``}
 
-            <textarea id="console-output" class="console" readonly>
-              ${this.consoleOutput}
-            </textarea>
+          ${!this.enableCodeExecution ? html`
+            <code-editor disabled=${this.remoteTyping} @content-changed=${this.onCodeChange}></code-editor>
+            ${lockIcon}
           ` : html``}
         </div>
       </div>
