@@ -21,7 +21,35 @@
 
     <!-- initialise dark mode (do this first to avoid 'flashing') -->
     <script>
+      function setDarkMode(toggle) {
+        let isDarkMode = !!localStorage.getItem('darkMode');
+        if (toggle) isDarkMode = !isDarkMode;
+
+        const html = document.querySelector('html');
+
+        if (isDarkMode) {
+          localStorage.setItem('darkMode', 'true');
+          html.classList.add('dark')
+
+          const toggle = document.getElementById('light-dark-toggle');
+          if (toggle) {
+            toggle.innerHTML = `<i class="material-icons">light_mode</i>`;
+          }
+        } else {
+          localStorage.removeItem('darkMode');
+          html.classList.remove('dark');
+
+          const toggle = document.getElementById('light-dark-toggle');
+          if (toggle) {
+            toggle.innerHTML = `<i class="material-icons">dark_mode</i>`;
+          }
+        }
+
+        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: !isDarkMode } }));
+      }
+
       document.addEventListener('DOMContentLoaded', () => setDarkMode(false));
+      setDarkMode(false);
     </script>
   </head>
 
@@ -59,27 +87,5 @@
 
     <!-- custom js -->
     <script defer type="module" src="~/dist/main.js" asp-append-version="true"></script>
-
-    <!-- dark mode -->
-    <script>
-      function setDarkMode(toggle) {
-        let isDarkMode = !!localStorage.getItem('darkMode');
-        if (toggle) isDarkMode = !isDarkMode;
-
-        const html = document.querySelector('html');
-
-        if (isDarkMode) {
-          localStorage.setItem('darkMode', 'true');
-          html.classList.add('dark');
-          document.getElementById('light-dark-toggle').innerHTML = `<i class="material-icons">light_mode</i>`;
-        } else {
-          localStorage.removeItem('darkMode');
-          html.classList.remove('dark');
-          document.getElementById('light-dark-toggle').innerHTML = `<i class="material-icons">dark_mode</i>`;
-        }
-
-        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: !isDarkMode } }));
-      }
-    </script>
   </body>
 </html>
