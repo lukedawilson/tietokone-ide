@@ -20,18 +20,7 @@
 
     <!-- initialise dark mode (do this first to avoid 'flashing') -->
     <script>
-      if (localStorage.getItem('darkMode')) {
-        const html = document.querySelector('html');
-        html.classList.add('dark');
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        if (localStorage.getItem('darkMode')) {
-          document.querySelector('.switch input').checked = true;
-        }
-
-        document.querySelector('.switch').style.display = 'unset'; // only show it once its state is correct, to avoid animations
-      });
+      document.addEventListener('DOMContentLoaded', () => setDarkMode(false));
     </script>
   </head>
 
@@ -42,16 +31,16 @@
         <div class="nav-wrapper">
           <a href="/" hx-get="/" hx-target="#main-content" hx-push-url="true"
              class="brand-logo pl3" style="margin-left: 15px">
-            <span>Tietokone IDE</span>
+            <i class="material-icons">code</i>
           </a>
           <ul class="right">
-            <li><a href="/privacy" hx-get="/privacy" hx-target="#main-content" hx-push-url="true">Privacy</a></li>
-            <li class="switch" style="display: none">
-              <label class="white-text" style="position: relative; top: -1px">
-                Dark mode
-                <input type="checkbox" onclick="toggleDarkMode(event)">
-                <span class="lever" style="margin-left: 6px; top: -1px"></span>
-              </label>
+            <li>
+              <a href="/privacy" class="white-text" hx-get="/privacy" hx-target="#main-content" hx-push-url="true">
+                Privacy
+              </a>
+            </li>
+            <li>
+              <a id="light-dark-toggle" class="btn-flat white-text" onclick="setDarkMode(true)"></a>
             </li>
           </ul>
         </div>
@@ -72,17 +61,23 @@
 
     <!-- dark mode -->
     <script>
-      function toggleDarkMode(e) {
+      function setDarkMode(toggle) {
+        let isDarkMode = !!localStorage.getItem('darkMode');
+        if (toggle) isDarkMode = !isDarkMode;
+
         const html = document.querySelector('html');
-        if (e.target.checked) {
+
+        if (isDarkMode) {
           localStorage.setItem('darkMode', 'true');
           html.classList.add('dark');
+          document.getElementById('light-dark-toggle').innerHTML = `<i class="material-icons">light_mode</i>`;
         } else {
           localStorage.removeItem('darkMode');
           html.classList.remove('dark');
+          document.getElementById('light-dark-toggle').innerHTML = `<i class="material-icons">dark_mode</i>`;
         }
 
-        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: e.target.checked } }));
+        document.dispatchEvent(new CustomEvent('darkModeToggled', { detail: { darkMode: !isDarkMode } }));
       }
     </script>
   </body>
